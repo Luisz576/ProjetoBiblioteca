@@ -6,29 +6,37 @@ namespace Biblioteca.Models
 {
     public class EmprestimoService 
     {
-        public void Inserir(Emprestimo e)
+        public bool Inserir(Emprestimo e)
         {
-            using(BibliotecaContext bc = new BibliotecaContext())
-            {
-                bc.Emprestimos.Add(e);
-                bc.SaveChanges();
+            if(validate_emprestimo(e)){
+                using(BibliotecaContext bc = new BibliotecaContext())
+                {
+                    bc.Emprestimos.Add(e);
+                    bc.SaveChanges();
+                    return true;
+                }
             }
+            return false;
         }
 
-        public void Atualizar(Emprestimo e)
+        public bool Atualizar(Emprestimo e)
         {
-            using(BibliotecaContext bc = new BibliotecaContext())
-            {
-                Emprestimo emprestimo = bc.Emprestimos.Find(e.Id);
-                emprestimo.NomeUsuario = e.NomeUsuario;
-                emprestimo.Telefone = e.Telefone;
-                emprestimo.LivroId = e.LivroId;
-                emprestimo.DataEmprestimo = e.DataEmprestimo;
-                emprestimo.DataDevolucao = e.DataDevolucao;
-                emprestimo.Devolvido = e.Devolvido;
+            if(validate_emprestimo(e)){
+                using(BibliotecaContext bc = new BibliotecaContext())
+                {
+                    Emprestimo emprestimo = bc.Emprestimos.Find(e.Id);
+                    emprestimo.NomeUsuario = e.NomeUsuario;
+                    emprestimo.Telefone = e.Telefone;
+                    emprestimo.LivroId = e.LivroId;
+                    emprestimo.DataEmprestimo = e.DataEmprestimo;
+                    emprestimo.DataDevolucao = e.DataDevolucao;
+                    emprestimo.Devolvido = e.Devolvido;
 
-                bc.SaveChanges();
+                    bc.SaveChanges();
+                    return true;
+                }
             }
+            return false;
         }
 
         public List<Emprestimo> ListarTodos(FiltrosEmprestimos filtro)
@@ -70,5 +78,19 @@ namespace Biblioteca.Models
                 return bc.Emprestimos.Find(id);
             }
         }
+
+        private bool validate_emprestimo(Emprestimo e){
+            return (
+                e.NomeUsuario != null &&
+                e.Telefone != null &&
+                e.NomeUsuario != "" &&
+                e.Telefone != "" &&
+                e.NomeUsuario.Trim() != "" &&
+                e.Telefone.Trim() != "" &&
+                e.DataEmprestimo != null &&
+                e.DataDevolucao != null
+            );
+        }
+
     }
 }

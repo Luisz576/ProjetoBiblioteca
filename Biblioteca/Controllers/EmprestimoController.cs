@@ -25,16 +25,28 @@ namespace Biblioteca.Controllers
         {
             Autenticacao.CheckLogin(this);
             EmprestimoService emprestimoService = new EmprestimoService();
-            
+            ViewData["Erro"] = null;
             if(viewModel.Emprestimo.Id == 0)
             {
-                emprestimoService.Inserir(viewModel.Emprestimo);
+                if(!emprestimoService.Inserir(viewModel.Emprestimo)){
+                    ViewData["Erro"] = "Algum campo está vazio";
+                }
             }
             else
             {
-                emprestimoService.Atualizar(viewModel.Emprestimo);
+                if(!emprestimoService.Atualizar(viewModel.Emprestimo)){
+                    ViewData["Erro"] = "Algum campo está vazio";
+                }
             }
-            return RedirectToAction("Listagem");
+            if(ViewData["Erro"] == null){
+                return RedirectToAction("Listagem");
+            }else{
+                LivroService livroService = new LivroService();
+
+                CadEmprestimoViewModel cadModel = new CadEmprestimoViewModel();
+                cadModel.Livros = livroService.ListarTodos();
+                return View(cadModel);
+            }
         }
 
         public IActionResult Listagem(string tipoFiltro, string filtro)

@@ -4,6 +4,11 @@
 }
 
 <h1 class="row justify-content-md-center">Cadastro de Empréstimo</h1>
+<h2>
+    @if(ViewData["Erro"] != null){
+        <p>@ViewData["Erro"]</p>
+    }
+</h2>
 <div class="row justify-content-md-center">
     <form asp-action="Cadastro" method="POST" class="col-md-4">
         <fieldset>
