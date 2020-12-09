@@ -27,17 +27,11 @@ namespace Biblioteca.Controllers
             EmprestimoService emprestimoService = new EmprestimoService();
             ViewData["Erro"] = null;
             if(viewModel.Emprestimo.Id == 0)
-            {
-                if(!emprestimoService.Inserir(viewModel.Emprestimo)){
+                if(!emprestimoService.Inserir(viewModel.Emprestimo))
                     ViewData["Erro"] = "Algum campo está vazio";
-                }
-            }
             else
-            {
-                if(!emprestimoService.Atualizar(viewModel.Emprestimo)){
+                if(!emprestimoService.Atualizar(viewModel.Emprestimo))
                     ViewData["Erro"] = "Algum campo está vazio";
-                }
-            }
             if(ViewData["Erro"] == null){
                 return RedirectToAction("Listagem");
             }else{

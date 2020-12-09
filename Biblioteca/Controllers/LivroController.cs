@@ -16,16 +16,12 @@ namespace Biblioteca.Controllers
         {
             Autenticacao.CheckLogin(this);
             LivroService livroService = new LivroService();
-
+            ViewData["Erro"] = null;
             if(l.Id == 0)
-            {
                 livroService.Inserir(l);
-            }
             else
-            {
                 livroService.Atualizar(l);
-            }
-
+            
             return RedirectToAction("Listagem");
         }
 

@@ -6,25 +6,32 @@ namespace Biblioteca.Models
 {
     public class LivroService
     {
-        public void Inserir(Livro l)
+        public bool Inserir(Livro l)
         {
-            using(BibliotecaContext bc = new BibliotecaContext())
-            {
-                bc.Livros.Add(l);
-                bc.SaveChanges();
+            if(validate_livro(l)){
+                using(BibliotecaContext bc = new BibliotecaContext())
+                {
+                    bc.Livros.Add(l);
+                    bc.SaveChanges();
+                    return true;
+                }
             }
+            return false;
         }
 
-        public void Atualizar(Livro l)
+        public bool Atualizar(Livro l)
         {
-            using(BibliotecaContext bc = new BibliotecaContext())
-            {
-                Livro livro = bc.Livros.Find(l.Id);
-                livro.Autor = l.Autor;
-                livro.Titulo = l.Titulo;
-
-                bc.SaveChanges();
+            if(validate_livro(l)){
+                using(BibliotecaContext bc = new BibliotecaContext())
+                {
+                    Livro livro = bc.Livros.Find(l.Id);
+                    livro.Autor = l.Autor;
+                    livro.Titulo = l.Titulo;
+                    bc.SaveChanges();
+                    return true;
+                }
             }
+            return false;
         }
 
         public ICollection<Livro> ListarTodos(FiltrosLivros filtro = null)
@@ -82,5 +89,15 @@ namespace Biblioteca.Models
                 return bc.Livros.Find(id);
             }
         }
+
+        private bool validate_livro(Livro l){
+            return (
+                l.Titulo != null &&
+                l.Titulo.Trim() != "" &&
+                l.Autor != null &&
+                l.Autor.Trim() != ""
+            );
+        }
+
     }
 }

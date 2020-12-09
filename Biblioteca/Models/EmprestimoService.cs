@@ -82,13 +82,8 @@ namespace Biblioteca.Models
         private bool validate_emprestimo(Emprestimo e){
             return (
                 e.NomeUsuario != null &&
-                e.Telefone != null &&
                 e.NomeUsuario != "" &&
-                e.Telefone != "" &&
-                e.NomeUsuario.Trim() != "" &&
-                e.Telefone.Trim() != "" &&
-                e.DataEmprestimo != null &&
-                e.DataDevolucao != null
+                e.NomeUsuario.Trim() != ""
             );
         }
 
