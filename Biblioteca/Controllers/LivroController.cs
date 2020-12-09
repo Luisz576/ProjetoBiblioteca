@@ -14,6 +14,7 @@ namespace Biblioteca.Controllers
         [HttpPost]
         public IActionResult Cadastro(Livro l)
         {
+            Autenticacao.CheckLogin(this);
             LivroService livroService = new LivroService();
 
             if(l.Id == 0)
