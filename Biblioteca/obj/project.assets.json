@@ -612,7 +612,7 @@
       ]
     },
     "Newtonsoft.Json/11.0.2": {
-      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "type": "package",
       "path": "newtonsoft.json/11.0.2",
       "files": [
@@ -845,28 +845,30 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lucas Fraga\\.nuget\\packages\\": {},
+    "C:\\Users\\lrfer\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VS Code Projects\\net-core-projects\\Biblioteca\\netcore3.1\\Biblioteca\\Biblioteca.csproj",
+      "projectUniqueName": "C:\\dev\\github\\Repositorios\\ProjetoBiblioteca\\Biblioteca\\Biblioteca.csproj",
       "projectName": "Biblioteca",
-      "projectPath": "D:\\VS Code Projects\\net-core-projects\\Biblioteca\\netcore3.1\\Biblioteca\\Biblioteca.csproj",
-      "packagesPath": "C:\\Users\\Lucas Fraga\\.nuget\\packages\\",
-      "outputPath": "D:\\VS Code Projects\\net-core-projects\\Biblioteca\\netcore3.1\\Biblioteca\\obj\\",
+      "projectPath": "C:\\dev\\github\\Repositorios\\ProjetoBiblioteca\\Biblioteca\\Biblioteca.csproj",
+      "packagesPath": "C:\\Users\\lrfer\\.nuget\\packages\\",
+      "outputPath": "C:\\dev\\github\\Repositorios\\ProjetoBiblioteca\\Biblioteca\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Lucas Fraga\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\lrfer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -910,7 +912,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
       }
     }
   }
