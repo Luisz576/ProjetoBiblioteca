@@ -1,0 +1,46 @@
+@model List<Usuario>
+@{
+    ViewData["Title"] = "Listagem de Usuarios";
+}
+
+<div class="row">
+    <div class="col-md-12">
+    <form class="form-inline" method="POST">
+        <div class="form-group mb-2 mx-sm-3">
+            <input type="text" placeholder="Filtro" name="Filtro" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Pesquisar</button>
+    </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @if(Model.Count > 0){
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(Usuario u in Model)
+                    {
+                        <tr>
+                            <td>@u.Id</td>
+                            <td>@u.User</td>
+                            <td><a href="/Usuario/Edicao/@u.Id">Editar</a></td>
+                            @if(!u.isAdm){
+                                <td><a href="/Usuario/Deletar/@u.Id">Deletar</a></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }else{
+            <p>Nenhum registro encontrado</p>
+        }
+    </div>
+</div>
+

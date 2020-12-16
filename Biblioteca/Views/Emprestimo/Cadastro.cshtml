@@ -35,13 +35,16 @@
             <div class="form-group">
                 <label asp-for="Emprestimo.LivroId">Livro</label>
                 <select asp-for="Emprestimo.LivroId" class="form-control">
-                    @foreach(Livro l in Model.Livros)
-                    {
+                    @foreach(Livro l in Model.Livros){
                         <option value="@l.Id">@l.Titulo</option>
                     }
                 </select>
             </div>
         </fieldset>
-        <input type="submit" value="Salvar" class="btn btn-primary"/>
+        @if(Model.Livros.Count > 0){
+            <input type="submit" value="Salvar" class="btn btn-primary"/>
+        }else{
+            <p>Não há livros para empréstimo</p>
+        }
     </form>
 </div>

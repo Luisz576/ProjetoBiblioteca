@@ -1,8 +1,5 @@
 using Biblioteca.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System;
 
 namespace Biblioteca.Controllers
 {
@@ -16,7 +13,7 @@ namespace Biblioteca.Controllers
             EmprestimoService emprestimoService = new EmprestimoService();
 
             CadEmprestimoViewModel cadModel = new CadEmprestimoViewModel();
-            cadModel.Livros = livroService.ListarTodos();
+            cadModel.Livros = livroService.ListarDisponiveis();
             return View(cadModel);
         }
 
@@ -26,7 +23,6 @@ namespace Biblioteca.Controllers
             Autenticacao.CheckLogin(this);
             EmprestimoService emprestimoService = new EmprestimoService();
             ViewBag.erro = null;
-            Redirect("id" + viewModel.Emprestimo.Id);
             if(viewModel.Emprestimo.Id == 0){
                 if(!emprestimoService.Inserir(viewModel.Emprestimo)){
                     ViewBag.erro = "Algum campo está vazio";
@@ -40,10 +36,9 @@ namespace Biblioteca.Controllers
                 return RedirectToAction("Listagem");
             }else{
                 LivroService livroService = new LivroService();
-
                 CadEmprestimoViewModel cadModel = new CadEmprestimoViewModel();
                 cadModel.Emprestimo = viewModel.Emprestimo;
-                cadModel.Livros = livroService.ListarTodos();
+                cadModel.Livros = livroService.ListarDisponiveis(viewModel.Emprestimo);
                 return View(cadModel);
             }
         }
@@ -70,8 +65,8 @@ namespace Biblioteca.Controllers
             Emprestimo e = em.ObterPorId(id);
 
             CadEmprestimoViewModel cadModel = new CadEmprestimoViewModel();
-            cadModel.Livros = livroService.ListarTodos();
             cadModel.Emprestimo = e;
+            cadModel.Livros = livroService.ListarDisponiveis(e);
             
             return View(cadModel);
         }

@@ -30,12 +30,21 @@
             </div>
             <div class="form-group">
                 <label asp-for="Emprestimo.LivroId">Livro</label>
-                <select asp-for="Emprestimo.LivroId" class="form-control">
-                    @foreach(Livro l in Model.Livros)
-                    {
-                        <option value="@l.Id">@l.Titulo</option>
-                    }
-                </select>
+                <input type="hidden" asp-for="Emprestimo.LivroId">
+                @if(Model.Livros.Count > 0){
+                    <select asp-for="Emprestimo.LivroId" class="form-control">
+                        @foreach(Livro l in Model.Livros)
+                        {
+                            if(Model.Emprestimo.LivroId == l.Id){
+                                <option value="@l.Id" selected>@l.Titulo</option>
+                            }else{
+                                <option value="@l.Id">@l.Titulo</option>
+                            }
+                        }
+                    </select>
+                }else{
+                    <p>Não há mais livros disponíveis</p>
+                }
             </div>
             <div class="form-check">
                 <input class="form-check-input" asp-for="Emprestimo.Devolvido"/>
