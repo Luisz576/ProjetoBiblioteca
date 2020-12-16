@@ -24,16 +24,20 @@ namespace Biblioteca.Models
             if(validate_emprestimo(e)){
                 using(BibliotecaContext bc = new BibliotecaContext())
                 {
-                    Emprestimo emprestimo = bc.Emprestimos.Find(e.Id);
-                    emprestimo.NomeUsuario = e.NomeUsuario;
-                    emprestimo.Telefone = e.Telefone;
-                    emprestimo.LivroId = e.LivroId;
-                    emprestimo.DataEmprestimo = e.DataEmprestimo;
-                    emprestimo.DataDevolucao = e.DataDevolucao;
-                    emprestimo.Devolvido = e.Devolvido;
+                    try{
+                        Emprestimo emprestimo = bc.Emprestimos.Find(e.Id);
+                        emprestimo.NomeUsuario = e.NomeUsuario;
+                        emprestimo.Telefone = e.Telefone;
+                        emprestimo.LivroId = e.LivroId;
+                        emprestimo.DataEmprestimo = e.DataEmprestimo;
+                        emprestimo.DataDevolucao = e.DataDevolucao;
+                        emprestimo.Devolvido = e.Devolvido;
 
-                    bc.SaveChanges();
-                    return true;
+                        bc.SaveChanges();
+                        return true;
+                    }catch{
+                        return false;
+                    }
                 }
             }
             return false;
@@ -80,11 +84,7 @@ namespace Biblioteca.Models
         }
 
         private bool validate_emprestimo(Emprestimo e){
-            return (
-                e.NomeUsuario != null &&
-                e.NomeUsuario != "" &&
-                e.NomeUsuario.Trim() != ""
-            );
+            return (!string.IsNullOrEmpty(e.NomeUsuario) && !string.IsNullOrEmpty(e.Telefone));
         }
 
     }

@@ -104,3 +104,6 @@ C:\dev\github\Repositorios\ProjetoBiblioteca\Biblioteca\obj\Debug\netcoreapp3.1\
 C:\dev\github\Repositorios\ProjetoBiblioteca\Biblioteca\obj\Debug\netcoreapp3.1\Biblioteca.dll
 C:\dev\github\Repositorios\ProjetoBiblioteca\Biblioteca\obj\Debug\netcoreapp3.1\Biblioteca.pdb
 C:\dev\github\Repositorios\ProjetoBiblioteca\Biblioteca\obj\Debug\netcoreapp3.1\Biblioteca.genruntimeconfig.cache
+C:\dev\github\Repositorios\ProjetoBiblioteca\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Cadastro.cshtml.g.cs
+C:\dev\github\Repositorios\ProjetoBiblioteca\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Edicao.cshtml.g.cs
+C:\dev\github\Repositorios\ProjetoBiblioteca\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Listagem.cshtml.g.cs

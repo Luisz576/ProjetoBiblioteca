@@ -25,18 +25,24 @@ namespace Biblioteca.Controllers
         {
             Autenticacao.CheckLogin(this);
             EmprestimoService emprestimoService = new EmprestimoService();
-            ViewData["Erro"] = null;
-            if(viewModel.Emprestimo.Id == 0)
-                if(!emprestimoService.Inserir(viewModel.Emprestimo))
-                    ViewData["Erro"] = "Algum campo está vazio";
-            else
-                if(!emprestimoService.Atualizar(viewModel.Emprestimo))
-                    ViewData["Erro"] = "Algum campo está vazio";
-            if(ViewData["Erro"] == null){
+            ViewBag.erro = null;
+            Redirect("id" + viewModel.Emprestimo.Id);
+            if(viewModel.Emprestimo.Id == 0){
+                if(!emprestimoService.Inserir(viewModel.Emprestimo)){
+                    ViewBag.erro = "Algum campo está vazio";
+                }
+            }else{
+                if(!emprestimoService.Atualizar(viewModel.Emprestimo)){
+                    ViewBag.erro = "Erro ao atualizar";
+                }
+            }
+            if(string.IsNullOrEmpty(ViewBag.erro)){
                 return RedirectToAction("Listagem");
             }else{
                 LivroService livroService = new LivroService();
+
                 CadEmprestimoViewModel cadModel = new CadEmprestimoViewModel();
+                cadModel.Emprestimo = viewModel.Emprestimo;
                 cadModel.Livros = livroService.ListarTodos();
                 return View(cadModel);
             }

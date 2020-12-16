@@ -27,6 +27,7 @@ namespace Biblioteca.Models
                     Livro livro = bc.Livros.Find(l.Id);
                     livro.Autor = l.Autor;
                     livro.Titulo = l.Titulo;
+                    livro.Ano = l.Ano;
                     bc.SaveChanges();
                     return true;
                 }
@@ -41,8 +42,6 @@ namespace Biblioteca.Models
                 IQueryable<Livro> query;
                 
                 if(filtro != null)
-                {
-                    //definindo dinamicamente a filtragem
                     switch(filtro.TipoFiltro)
                     {
                         case "Autor":
@@ -57,14 +56,9 @@ namespace Biblioteca.Models
                             query = bc.Livros;
                         break;
                     }
-                }
                 else
-                {
-                    // caso filtro não tenha sido informado
                     query = bc.Livros;
-                }
                 
-                //ordenação padrão
                 return query.OrderBy(l => l.Titulo).ToList();
             }
         }
