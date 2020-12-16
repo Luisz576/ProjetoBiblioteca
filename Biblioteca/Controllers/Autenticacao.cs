@@ -13,5 +13,12 @@ namespace Biblioteca.Controllers
                 controller.Request.HttpContext.Response.Redirect("/Home/Login");
             }
         }
+        public static void CheckLoginLikeAdm(Controller controller)
+        {   
+            if(string.IsNullOrEmpty(controller.HttpContext.Session.GetString("user")))
+            {
+                controller.Request.HttpContext.Response.Redirect("/Home/Login");
+            }
+        }
     }
 }

@@ -36,7 +36,6 @@ namespace Biblioteca.Controllers
                 return RedirectToAction("Listagem");
             }else{
                 LivroService livroService = new LivroService();
-
                 CadEmprestimoViewModel cadModel = new CadEmprestimoViewModel();
                 cadModel.Livros = livroService.ListarTodos();
                 return View(cadModel);
