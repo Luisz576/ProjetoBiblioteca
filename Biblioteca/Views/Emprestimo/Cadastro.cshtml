@@ -22,26 +22,26 @@
                 <input asp-for="Emprestimo.Telefone" class="form-control"/>
             </div>
         </fieldset>
-        <fieldset>
-            <legend>Livro</legend>
-            <div class="form-group">
-                <label asp-for="Emprestimo.DataEmprestimo">Data de Empréstimo</label>
-                <input type="date" asp-for="Emprestimo.DataEmprestimo" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label asp-for="Emprestimo.DataDevolucao">Data de Devolução</label>
-                <input type="date" asp-for="Emprestimo.DataDevolucao" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label asp-for="Emprestimo.LivroId">Livro</label>
-                <select asp-for="Emprestimo.LivroId" class="form-control">
-                    @foreach(Livro l in Model.Livros){
-                        <option value="@l.Id">@l.Titulo</option>
-                    }
-                </select>
-            </div>
-        </fieldset>
         @if(Model.Livros.Count > 0){
+            <fieldset>
+                <legend>Livro</legend>
+                <div class="form-group">
+                    <label asp-for="Emprestimo.DataEmprestimo">Data de Empréstimo</label>
+                    <input type="date" asp-for="Emprestimo.DataEmprestimo" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Emprestimo.DataDevolucao">Data de Devolução</label>
+                    <input type="date" asp-for="Emprestimo.DataDevolucao" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Emprestimo.LivroId">Livro</label>
+                    <select asp-for="Emprestimo.LivroId" class="form-control">
+                        @foreach(Livro l in Model.Livros){
+                            <option value="@l.Id">@l.Titulo</option>
+                        }
+                    </select>
+                </div>
+            </fieldset>
             <input type="submit" value="Salvar" class="btn btn-primary"/>
         }else{
             <p>Não há livros para empréstimo</p>

@@ -1,5 +1,6 @@
 using Biblioteca.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Biblioteca.Controllers
 {
@@ -43,9 +44,10 @@ namespace Biblioteca.Controllers
             }
         }
 
-        public IActionResult Listagem(string tipoFiltro, string filtro)
+        public IActionResult Listagem(int page, string tipoFiltro, string filtro)
         {
             Autenticacao.CheckLogin(this);
+            ViewBag.pageAtual = page > 1 ? page : 1;
             FiltrosEmprestimos objFiltro = null;
             if(!string.IsNullOrEmpty(filtro))
             {
@@ -54,6 +56,9 @@ namespace Biblioteca.Controllers
                 objFiltro.TipoFiltro = tipoFiltro;
             }
             EmprestimoService emprestimoService = new EmprestimoService();
+            ViewBag.dataNow = DateTime.Now;
+            ViewBag.Filtro = string.IsNullOrEmpty(filtro) ? null : filtro;
+            ViewBag.TipoFiltro = string.IsNullOrEmpty(tipoFiltro) ? null : tipoFiltro;
             return View(emprestimoService.ListarTodos(objFiltro));
         }
 

@@ -1,3 +1,4 @@
+@using System;
 @model List<Emprestimo>
 @{
     ViewData["Title"] = "Listagem de Empréstimos";
@@ -5,7 +6,7 @@
 
 <div class="row">
     <div class="col-md-12">
-    <form class="form-inline" method="POST">
+    <form class="form-inline" method="GET">
         <div class="form-group mb-2">
             <select name="TipoFiltro" class="form-control">
                 <option value="Usuario">Usuário</option>
@@ -23,32 +24,96 @@
 <div class="row">
     <div class="col-md-12">
         @if(Model.Count > 0){
-            <table class="table table-striped"> 
-                <thead>
-                    <tr><th>Id</th>
-                    <th>Usuario</th>
-                    <th>Data Empréstimo</th>
-                    <th>Data Devolução</th>
-                    <th>Livro</th>
-                    <th>Autor</th>
-                    <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach(Emprestimo e in Model)
-                    {
-                    <tr>
-                        <td>@e.Id</td>
-                        @if(!e.Devolvido){ <td><span style="font-weight: bold">@e.NomeUsuario</span></td> }else{ <td>@e.NomeUsuario</td> }
-                        <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
-                        <td>@e.DataDevolucao.ToString("dd/MM/yyyy")</td>
-                        <td>@e.Livro.Titulo</td> 
-                        <td>@e.LivroId</td> 
-                        <td><a href="/Emprestimo/Edicao/@e.Id">Editar</a></td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
+            @if(ViewBag.pageAtual <= (Model.Count / 10 + (Model.Count % 10 > 0 ? 1 : 0))){
+                <table class="table table-striped"> 
+                    <thead>
+                        <tr><th>Id</th>
+                        <th>Usuario</th>
+                        <th>Data Empréstimo</th>
+                        <th>Data Devolução</th>
+                        <th>Livro</th>
+                        <th>Autor</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int pageCounter = 1; int itemCounter = 0; }
+                        @foreach(Emprestimo e in Model)
+                        {
+                            @if(pageCounter == ViewBag.pageAtual){
+                                @if(e.Devolvido){
+                                    @* DEVOLVIDO *@
+                                    <tr class="table-success">
+                                        <td>@e.Id</td>
+                                        <td>@e.NomeUsuario</td>
+                                        <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
+                                        <td>@e.DataDevolucao.ToString("dd/MM/yyyy")</td>
+                                        <td>@e.Livro.Titulo</td> 
+                                        <td>@e.LivroId</td> 
+                                        <td><a href="/Emprestimo/Edicao/@e.Id">Editar</a></td>
+                                    </tr>
+                                }else if(DateTime.Compare(ViewBag.dataNow, e.DataDevolucao) < 0){
+                                    @* NO PRAZO *@
+                                    <tr class="table-warning">
+                                        <td>@e.Id</td>
+                                        <td>@e.NomeUsuario</td>
+                                        <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
+                                        <td>@e.DataDevolucao.ToString("dd/MM/yyyy")</td>
+                                        <td>@e.Livro.Titulo</td> 
+                                        <td>@e.LivroId</td> 
+                                        <td><a href="/Emprestimo/Edicao/@e.Id">Editar</a></td>
+                                    </tr>
+                                }else{
+                                    @* ATRASADO *@
+                                    <tr class="table-danger">
+                                        <td>@e.Id</td>
+                                        <td>@e.NomeUsuario</td>
+                                        <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
+                                        <td>@e.DataDevolucao.ToString("dd/MM/yyyy")</td>
+                                        <td>@e.Livro.Titulo</td> 
+                                        <td>@e.LivroId</td> 
+                                        <td><a href="/Emprestimo/Edicao/@e.Id">Editar</a></td>
+                                    </tr>
+                                }
+                            }
+                            itemCounter++;
+                            pageCounter = (itemCounter / 10 + (itemCounter % 10 > 0 ? 1 : 0));
+                        }
+                    </tbody>
+                </table>
+                <div class="col-6">
+                    <div class="row">
+                        <form class="form-inline" method="GET">
+                            @{ int previousPage = @ViewBag.pageAtual - 1; bool isEnableA = previousPage > 0 ? true : false; }
+                            <input type="hidden" name="page" value="@previousPage">
+                            @if(ViewBag.Filtro != null && ViewBag.TipoFiltro != null){
+                                <input type="hidden" name="TipoFiltro" value="@ViewBag.TipoFiltro">
+                                <input type="hidden" name="Filtro" value="@ViewBag.Filtro">
+                            }
+                            @if(isEnableA){
+                                <button class="btn btn-primary" type="submit">Anterior</button>
+                            }else{
+                                <button class="btn btn-secondary" type="submit" disabled>Anterior</button>
+                            }
+                        </form>
+                        <form class="form-inline" method="GET">
+                            @{ int nextPage = @ViewBag.pageAtual + 1; bool isEnableP = nextPage <= (Model.Count / 10 + (Model.Count % 10 > 1 ? 1 : 0)) ? true : false; }
+                            <input type="hidden" name="page" value="@nextPage">
+                            @if(ViewBag.Filtro != null && ViewBag.TipoFiltro != null){
+                                <input type="hidden" name="TipoFiltro" value="@ViewBag.TipoFiltro">
+                                <input type="hidden" name="Filtro" value="@ViewBag.Filtro">
+                            }
+                            @if(isEnableP){
+                                <button class="btn btn-primary" type="submit">Próximo</button>
+                            }else{
+                                <button class="btn btn-secondary" type="submit" disabled>Próximo</button>
+                            }
+                        </form>
+                    </div>
+                </div>
+            }else{
+                <p>Nenhum registro encontrado</p>
+            }
         }else{
             <p>Nenhum registro encontrado</p>
         }

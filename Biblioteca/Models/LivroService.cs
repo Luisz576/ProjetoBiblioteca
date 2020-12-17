@@ -35,31 +35,31 @@ namespace Biblioteca.Models
             return false;
         }
 
-        public ICollection<Livro> ListarTodos(FiltrosLivros filtro = null)
+        public List<Livro> ListarTodos(FiltrosLivros filtro = null)
         {
             using(BibliotecaContext bc = new BibliotecaContext())
             {
-                IQueryable<Livro> query;
+                List<Livro> query;
                 
                 if(filtro != null)
                     switch(filtro.TipoFiltro)
                     {
                         case "Autor":
-                            query = bc.Livros.Where(l => l.Autor.Contains(filtro.Filtro));
+                            query = bc.Livros.Where(l => l.Autor.Contains(filtro.Filtro)).ToList();
                         break;
 
                         case "Titulo":
-                            query = bc.Livros.Where(l => l.Titulo.Contains(filtro.Filtro));
+                            query = bc.Livros.Where(l => l.Titulo.Contains(filtro.Filtro)).ToList();
                         break;
 
                         default:
-                            query = bc.Livros;
+                            query = bc.Livros.ToList();
                         break;
                     }
                 else
-                    query = bc.Livros;
+                    query = bc.Livros.ToList();
                 
-                return query.OrderBy(l => l.Titulo).ToList();
+                return query.OrderBy(l => l.Id).Reverse().ToList();
             }
         }
 
@@ -69,7 +69,7 @@ namespace Biblioteca.Models
             {
                 return
                     bc.Livros
-                    .Where(l => (!(bc.Emprestimos.Where(e => e.Devolvido == false).Select(e => e.LivroId).Contains(l.Id))))
+                    .Where(l => (!(bc.Emprestimos.Where(e => e.Devolvido == false).Select(e => e.LivroId).Contains(l.Id)))).OrderBy(e => e.Titulo)
                     .ToList();
             }
         }
@@ -83,7 +83,7 @@ namespace Biblioteca.Models
                     .ToList();
                 if(!livrosDisponiveis.Contains(ObterPorId(emprestimo.LivroId)))
                     livrosDisponiveis.Add(ObterPorId(emprestimo.LivroId));
-                return livrosDisponiveis;
+                return livrosDisponiveis.OrderBy(l => l.Titulo).ToList();
             }
         }
 
